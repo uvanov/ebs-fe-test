@@ -10,6 +10,7 @@ export interface Category {
 }
 
 export interface Product {
+  id: number;
   name: string;
   category: Category;
   price: number;
@@ -24,6 +25,6 @@ export interface State {
 }
 
 export interface Action {
-  type: 'changeFilterCategory' | 'changeFilterPrice' | 'addToCard' | 'removeFromCard' | 'changeQuantity',
+  type: 'changeFilterCategory' | 'changeFilterPrice' | 'addToCart' | 'removeFromCart' | 'changeQuantity',
   payload: any;
 }

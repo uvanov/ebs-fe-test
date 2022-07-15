@@ -7,17 +7,21 @@ import {
 } from './ProductContext.typings';
 import { initialState } from './ProductContext.constants';
 
-export const ProductContext = createContext({});
+export const ProductContext = createContext<{ state: State, dispatch: React.Dispatch<any> }>({
+  state: initialState,
+  dispatch: () => {}
+});
 
 export const ProductContextProvider: React.FC<ProductProviderProps> = (props) => {
 
   const reducer = (state: State, action: Action) => {
+    console.log('Reducer', action);
     if (action.type === 'changeFilterCategory') return { ...state, filterCategory: action.payload };
     if (action.type === 'changeFilterPrice') return { ...state, filterPrice: action.payload };
-    if (action.type === 'addToCard') return { ...state, cartProducts: [...state.cartProducts, action.payload] };
-    if (action.type === 'removeFromCard') return {
+    if (action.type === 'addToCart') return { ...state, cartProducts: [...state.cartProducts, action.payload] };
+    if (action.type === 'removeFromCart') return {
       ...state,
-      cartProducts: state.cartProducts.filter(product => product.name !== action.payload),
+      cartProducts: state.cartProducts.filter(product => product.id !== action.payload)
     };
     if (action.type === 'changeQuantity') return {
       ...state, cartProducts: state.cartProducts.map(product => {
@@ -33,7 +37,7 @@ export const ProductContextProvider: React.FC<ProductProviderProps> = (props) =>
   const [state, dispatch] = useReducer(reducer, initialState);
 
   return (
-    <ProductContext.Provider value={{ state, dispatch }}>
+    <ProductContext.Provider value={ { state, dispatch } }>
       { props.children }
     </ProductContext.Provider>
   );
