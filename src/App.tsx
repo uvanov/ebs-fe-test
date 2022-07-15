@@ -4,6 +4,9 @@ import {
   Route,
   Routes,
 } from 'react-router-dom';
+import {
+  ProductContextProvider as ProductContext
+} from './contexts/ProductContext/ProductContext';
 
 import './App.css';
 
@@ -13,14 +16,16 @@ import Layout from './pages/Layout/Layout';
 
 const App: React.FC = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path='/' element={ <Layout /> }>
-          <Route index element={ <Main /> } />
-          <Route path='cart' element={ <Cart /> } />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <ProductContext>
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={ <Layout /> }>
+            <Route index element={ <Main /> } />
+            <Route path='cart' element={ <Cart /> } />
+          </Route>
+        </Routes>
+      </BrowserRouter>
+    </ProductContext>
   );
 };
 
