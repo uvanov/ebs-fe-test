@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Button,
   Paper,
@@ -10,10 +10,21 @@ import {
   TableRow,
 } from '@mui/material';
 import { ShoppingCart } from '@mui/icons-material';
+import { ProductContext } from '../../../contexts/ProductContext/ProductContext';
+import { Product } from '../../../contexts/ProductContext/ProductContext.typings';
 
 import ProductListProps from './ProductList.typings';
+import ProductItem from '../ProductItem/ProductItem';
 
 const ProductList: React.FC<ProductListProps> = (props) => {
+
+  const { state, dispatch } = useContext(ProductContext);
+
+  const switchSortingType = () => {
+    const payload = state.filterPrice === 'asc' ? 'desc' : 'asc';
+    dispatch({ type: 'changeFilterPrice', payload });
+  };
+
   return (
     <TableContainer component={ Paper }>
       <Table sx={ { maxWidth: 650 } }>
@@ -21,32 +32,21 @@ const ProductList: React.FC<ProductListProps> = (props) => {
           <TableRow>
             <TableCell>Category</TableCell>
             <TableCell align='right'>Name</TableCell>
-            <TableCell align='right'>Price</TableCell>
+            <TableCell
+              align='right'
+              onClick={ switchSortingType }
+              sx={ { cursor: 'pointer' } }
+            >
+              Price
+              { state.filterPrice === 'asc' ? '▲' : '▼' }
+            </TableCell>
             <TableCell align='right'></TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {
             props.products.map(product => (
-              <TableRow
-                key={ product.name }
-                sx={ { '&:last-child td, &:last-child th': { border: 0 } } }
-              >
-                <TableCell component='th' scope='row'>
-                  { product.category.name }
-                </TableCell>
-                <TableCell align='right'>
-                  { product.name }
-                </TableCell>
-                <TableCell align='right'>
-                  { product.price }
-                </TableCell>
-                <TableCell align='right'>
-                  <Button variant='text'>
-                    <ShoppingCart />
-                  </Button>
-                </TableCell>
-              </TableRow>
+              <ProductItem product={ product } />
             ))
           }
         </TableBody>
