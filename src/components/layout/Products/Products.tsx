@@ -20,12 +20,20 @@ const Products: React.FC = () => {
   }, []);
 
   const sortedProducts = useMemo(() => {
-    if (state.filterPrice === 'asc') {
-      return ascSort(products);
+    let filteredProducts: Product[];
+
+    if (state.filterCategory) {
+      filteredProducts = products.filter(product => product.category.id === state.filterCategory);
     } else {
-      return descSort(products);
+      filteredProducts = products;
     }
-  }, [products, state]);
+
+    if (state.filterPrice === 'asc') {
+      return ascSort(filteredProducts);
+    } else {
+      return descSort(filteredProducts);
+    }
+  }, [products, state.filterCategory, state.filterPrice]);
 
   return (
     <ProductList products={ sortedProducts } />
