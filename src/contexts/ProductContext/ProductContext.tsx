@@ -25,7 +25,7 @@ export const ProductContextProvider: React.FC<ProductProviderProps> = (props) =>
     };
     if (action.type === 'changeQuantity') return {
       ...state, cartProducts: state.cartProducts.map(product => {
-        if (product.name === action.payload.name) {
+        if (product.id === action.payload.id) {
           return { ...product, quantity: action.payload.quantity };
         }
         return product;
