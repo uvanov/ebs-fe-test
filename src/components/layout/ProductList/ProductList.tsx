@@ -7,7 +7,7 @@ import {
   TableCell,
   TableContainer,
   TableHead,
-  TableRow,
+  TableRow, Typography,
 } from '@mui/material';
 import { ShoppingCart } from '@mui/icons-material';
 import { ProductContext } from '../../../contexts/ProductContext/ProductContext';
@@ -46,11 +46,24 @@ const ProductList: React.FC<ProductListProps> = (props) => {
         <TableBody>
           {
             props.products.map(product => (
-              <ProductItem product={ product } />
+              <ProductItem
+                key={ product.id }
+                product={ product }
+              />
             ))
           }
         </TableBody>
       </Table>
+      {
+        props.products.length === 0 && (
+          <Typography
+            variant='h6'
+            component='p'
+          >
+            I have no goods in this category :(
+          </Typography>
+        )
+      }
     </TableContainer>
   );
 };
