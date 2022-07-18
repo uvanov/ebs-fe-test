@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-
 import {
   Button,
   TableCell,
@@ -8,7 +7,10 @@ import {
 import { ShoppingCart } from '@mui/icons-material';
 import { ProductContext } from '../../../contexts/ProductContext/ProductContext';
 
-import { Product } from '../../../contexts/ProductContext/ProductContext.typings';
+import {
+  CartProduct,
+  Product
+} from '../../../contexts/ProductContext/ProductContext.typings';
 import { ProductItemProps } from './ProductItem.typings';
 
 const ProductItem: React.FC<ProductItemProps> = (props) => {
@@ -21,7 +23,8 @@ const ProductItem: React.FC<ProductItemProps> = (props) => {
 
   const onProductClick = (product: Product) => {
     if (!doesCartIncludes(product)) {
-      dispatch({ type: 'addToCart', payload: product });
+      const productToAdd: CartProduct = { ...product, quantity: 1 };
+      dispatch({ type: 'addToCart', payload: productToAdd });
     } else {
       dispatch({ type: 'removeFromCart', payload: product.id });
     }
