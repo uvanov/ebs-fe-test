@@ -1,6 +1,5 @@
 import React, { useContext } from 'react';
 import {
-  Button,
   Paper,
   Table,
   TableBody,
@@ -9,9 +8,7 @@ import {
   TableHead,
   TableRow, Typography,
 } from '@mui/material';
-import { ShoppingCart } from '@mui/icons-material';
 import { ProductContext } from '../../../contexts/ProductContext/ProductContext';
-import { Product } from '../../../contexts/ProductContext/ProductContext.typings';
 
 import ProductListProps from './ProductList.typings';
 import ProductItem from '../ProductItem/ProductItem';
